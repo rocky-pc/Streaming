@@ -51,7 +51,7 @@ export function VideoPlayer({
   const [buffered, setBuffered] = useState(0)
   const [showSettings, setShowSettings] = useState(false)
 
-  const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout>>()
+  const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const lastVolumeRef = useRef(1)
 
   const savePlaybackPosition = useCallback(() => {

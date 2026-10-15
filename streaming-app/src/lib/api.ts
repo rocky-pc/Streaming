@@ -58,7 +58,11 @@ export async function getRelatedVideos(currentVideoId: string, limit = 8): Promi
 }
 
 export async function createVideo(video: Omit<Video, 'id' | 'created_at' | 'updated_at'>): Promise<Video> {
-  const { data, error } = await supabase.from('videos').insert(video).select().single()
+  const { data, error } = await supabase
+    .from('videos')
+    .insert(video as any)
+    .select()
+    .single()
 
   if (error) {
     throw new Error(error.message)

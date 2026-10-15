@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Geist } from 'next/font/google'
 import './globals.css'
 import { Navbar } from '@/components/layout/Navbar'
+import { Footer } from '@/components/layout/Footer'
 import { siteConfig } from '@/config/site'
 
 const geistSans = Geist({
@@ -43,11 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-full flex flex-col bg-gray-950 text-white">
         <Navbar />
         <main className="flex-1 pt-16">{children}</main>
-        <footer className="border-t border-gray-800 py-8 px-4">
-          <div className="max-w-7xl mx-auto text-center text-sm text-gray-500">
-            <p>&copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
-          </div>
-        </footer>
+        <Footer />
       </body>
     </html>
   )
