@@ -1,7 +1,7 @@
 import { supabase } from '@/lib/supabase'
 import { generateId } from '@/lib/utils'
 import type { VideoUpload, UploadProgress } from '@/types'
-import { siteConfig } from '@/config/site'
+import { siteConfig, type AllowedVideoType, type AllowedThumbnailType } from '@/config/site'
 
 export async function uploadVideo(
   upload: VideoUpload,
@@ -86,7 +86,7 @@ export async function uploadVideoWithProgress(
 }
 
 export function validateVideoFile(file: File): { valid: boolean; error?: string } {
-  if (!siteConfig.video.allowedTypes.includes(file.type)) {
+  if (!siteConfig.video.allowedTypes.includes(file.type as AllowedVideoType)) {
     return {
       valid: false,
       error: `Unsupported file type. Allowed types: ${siteConfig.video.allowedTypes.join(', ')}`,
@@ -104,7 +104,7 @@ export function validateVideoFile(file: File): { valid: boolean; error?: string 
 }
 
 export function validateThumbnailFile(file: File): { valid: boolean; error?: string } {
-  if (!siteConfig.video.thumbnailTypes.includes(file.type)) {
+  if (!siteConfig.video.thumbnailTypes.includes(file.type as AllowedThumbnailType)) {
     return {
       valid: false,
       error: `Unsupported thumbnail type. Allowed types: ${siteConfig.video.thumbnailTypes.join(', ')}`,

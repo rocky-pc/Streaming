@@ -1,10 +1,9 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { cn } from '@/lib/utils'
 import { Search, X } from 'lucide-react'
 import { Input } from '@/components/ui/Input'
-import { debounce } from '@/lib/utils'
 
 interface SearchBarProps {
   value: string
@@ -13,18 +12,28 @@ interface SearchBarProps {
   placeholder?: string
 }
 
+function debounce<T extends (...args: Parameters<T>) => ReturnType<T>>(
+  func: T,
+  wait: number
+): T {
+  let timeout: ReturnType<typeof setTimeout> | null = null
+  return ((...args: Parameters<T>) => {
+    if (timeout) clearTimeout(timeout)
+    timeout = setTimeout(() => func(...args), wait)
+  }) as T
+}
+
 export function SearchBar({ value, onChange, onSearch, placeholder = 'Search videos...' }: SearchBarProps) {
   const [isFocused, setIsFocused] = useState(false)
-  const debouncedSearch = useCallback(
+  const debouncedSearchRef = useRef(
     debounce((query: string) => {
       onSearch(query)
-    }, 300),
-    [onSearch]
+    }, 300)
   )
 
   useEffect(() => {
-    debouncedSearch(value)
-  }, [value, debouncedSearch])
+    debouncedSearchRef.current(value)
+  }, [value])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value

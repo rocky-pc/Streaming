@@ -1,5 +1,6 @@
 'use client'
 
+import { cn } from '@/lib/utils'
 import { VideoCard } from './VideoCard'
 import { VideoCardSkeleton } from '@/components/ui/Skeleton'
 import type { Video } from '@/types'

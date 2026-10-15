@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect, useCallback, KeyboardEvent } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import { cn } from '@/lib/utils'
 import {
   Play,
@@ -51,7 +51,7 @@ export function VideoPlayer({
   const [buffered, setBuffered] = useState(0)
   const [showSettings, setShowSettings] = useState(false)
 
-  const controlsTimeoutRef = useRef<NodeJS.Timeout>()
+  const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout>>()
   const lastVolumeRef = useRef(1)
 
   const savePlaybackPosition = useCallback(() => {
@@ -144,7 +144,7 @@ export function VideoPlayer({
     const video = videoRef.current
     if (!video) return
 
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: globalThis.KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
 
       switch (e.key) {
@@ -200,8 +200,8 @@ export function VideoPlayer({
       }
     }
 
-    document.addEventListener('keydown', handleKeyDown)
-    return () => document.removeEventListener('keydown', handleKeyDown)
+    document.addEventListener('keydown', handleKeyDown as EventListener)
+    return () => document.removeEventListener('keydown', handleKeyDown as EventListener)
   }, [duration, isPlaying, isFullscreen, playbackRate])
 
   useEffect(() => {
@@ -335,7 +335,6 @@ export function VideoPlayer({
         poster={poster}
         className="w-full h-full object-contain"
         playsInline
-        disabled={error !== null}
       />
 
       {isLoading && (

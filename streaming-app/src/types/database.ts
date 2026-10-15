@@ -8,6 +8,7 @@ export interface VideoRow {
   file_size: number | null
   mime_type: string | null
   storage_path: string
+  thumbnail_path: string | null
   created_at: string
   updated_at: string
 }

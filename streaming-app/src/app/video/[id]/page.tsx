@@ -23,21 +23,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: 'video.other',
       title: video.title,
       description: video.description || undefined,
-      video: {
-        url: video.video_url,
-        type: video.mime_type || 'video/mp4',
-      },
+      videos: [
+        {
+          url: video.video_url,
+          type: video.mime_type || 'video/mp4',
+          width: 1280,
+          height: 720,
+        },
+      ],
       images: video.thumbnail_url ? [{ url: video.thumbnail_url }] : [],
     },
     twitter: {
       card: 'player',
       title: video.title,
       description: video.description || undefined,
-      player: {
-        url: video.video_url,
-        width: 1280,
-        height: 720,
-      },
       images: video.thumbnail_url ? [video.thumbnail_url] : [],
     },
   }

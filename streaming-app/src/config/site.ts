@@ -19,8 +19,8 @@ export const siteConfig = {
   },
   video: {
     maxFileSize: 2 * 1024 * 1024 * 1024, // 2GB
-    allowedTypes: ['video/mp4', 'video/webm', 'video/quicktime', 'application/x-mpegURL'],
-    thumbnailTypes: ['image/jpeg', 'image/png', 'image/webp'],
+    allowedTypes: ['video/mp4', 'video/webm', 'video/quicktime', 'application/x-mpegURL'] as const,
+    thumbnailTypes: ['image/jpeg', 'image/png', 'image/webp'] as const,
     maxThumbnailSize: 5 * 1024 * 1024, // 5MB
   },
   pagination: {
@@ -29,3 +29,6 @@ export const siteConfig = {
 } as const
 
 export type SiteConfig = typeof siteConfig
+
+export type AllowedVideoType = typeof siteConfig.video.allowedTypes[number]
+export type AllowedThumbnailType = typeof siteConfig.video.thumbnailTypes[number]

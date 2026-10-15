@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/Input'
 import { Textarea } from '@/components/ui/Textarea'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card'
 import { Upload, X, CheckCircle, AlertCircle, Loader2, FileVideo, Image as ImageIcon } from 'lucide-react'
-import { siteConfig } from '@/config/site'
+import { siteConfig, type AllowedVideoType, type AllowedThumbnailType } from '@/config/site'
 
 interface UploadPageProps {}
 
@@ -26,7 +26,7 @@ export default function UploadPage() {
   const thumbInputRef = useRef<HTMLInputElement>(null)
 
   const validateVideo = useCallback((file: File): boolean => {
-    if (!siteConfig.video.allowedTypes.includes(file.type)) {
+    if (!siteConfig.video.allowedTypes.includes(file.type as AllowedVideoType)) {
       setError(`Unsupported video format. Allowed: ${siteConfig.video.allowedTypes.join(', ')}`)
       return false
     }
@@ -38,7 +38,7 @@ export default function UploadPage() {
   }, [])
 
   const validateThumbnail = useCallback((file: File): boolean => {
-    if (!siteConfig.video.thumbnailTypes.includes(file.type)) {
+    if (!siteConfig.video.thumbnailTypes.includes(file.type as AllowedThumbnailType)) {
       setError(`Unsupported image format. Allowed: ${siteConfig.video.thumbnailTypes.join(', ')}`)
       return false
     }
